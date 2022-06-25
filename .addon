@@ -1,0 +1,25 @@
+{
+  "Title": "Quest",
+  "Type": "game",
+  "Org": "trndlr",
+  "Ident": "quest",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": null,
+  "HasCode": true,
+  "CodePath": "/code/",
+  "RootNamespace": "Quest",
+  "Metadata": {
+    "MaxPlayers": 32,
+    "MinPlayers": 0,
+    "GameNetworkType": 0,
+    "MapSelect": 3,
+    "MapList": [
+      "local.quest-test"
+    ],
+    "RankType": 0,
+    "PerMapRanking": false,
+    "LeaderboardType": 0
+  }
+}
