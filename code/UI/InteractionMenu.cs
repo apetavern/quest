@@ -59,8 +59,21 @@ public class InteractionMenu : Panel
 			{
 				InteractionMenuContainer.AddClass( "show" );
 
-				InteractionMenuContainer.Style.Left = ScaleFromScreen * Mouse.Position.x;
-				InteractionMenuContainer.Style.Top = ScaleFromScreen * Mouse.Position.y;
+				var xPos = Mouse.Position.x;
+				var yPos = Mouse.Position.y;
+
+				if ( xPos + InteractionEntryContainer.Box.Rect.width > Screen.Width )
+				{
+					xPos -= InteractionEntryContainer.Box.Rect.width;
+				}
+
+				if ( yPos + InteractionEntryContainer.Box.Rect.height > Screen.Height )
+				{
+					yPos -= InteractionMenuContainer.Box.Rect.height * 2;
+				}
+
+				InteractionMenuContainer.Style.Left = xPos * ScaleFromScreen;
+				InteractionMenuContainer.Style.Top = yPos * ScaleFromScreen;
 			}
 		}
 	}

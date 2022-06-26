@@ -25,13 +25,18 @@ public class InteractionHint : Panel
 		{
 			if ( trace.Entity is IInteractable interactable )
 			{
-				PrimaryAttackHintLabel.Text = interactable.GetInteractions().First().Name + " " + interactable.GetInteracteeName();
+				var interaction = interactable.GetInteractions().First();
+				PrimaryAttackHintLabel.Text = interaction.Name + " " + interactable.GetInteracteeName();
+
+				if ( Input.Pressed( InputButton.PrimaryAttack ) )
+				{
+					interaction.ClientResolve();
+				}
 			}
 			else if ( trace.Entity is WorldEntity )
 			{
 				PrimaryAttackHintLabel.Text = "Walk here";
 			}
-
 		}
 	}
 }

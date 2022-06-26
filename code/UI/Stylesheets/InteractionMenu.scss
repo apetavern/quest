@@ -14,13 +14,14 @@
     .interactee-label {
         color: white;
         background-color: rgba(16, 23, 26, 1);
-        font-size: 48px;
+        font-size: 32px;
         text-stroke: 3px black;
         padding: 6px;
     }
 
     .interaction-entry-container {
         flex-direction: column;
+        padding: 6px;
     }
 
     .interaction-entry {
