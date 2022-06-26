@@ -1,26 +1,9 @@
 ﻿InteractionMenu {
 
-    .interaction-hint-label {
-        position: absolute;
-        font-size: 32px;
-        color: yellow;
-        text-stroke: 3px black;
-        opacity: 0;
-
-        &.show {
-            opacity: 1;
-        }
-    }
-
     .interaction-menu-container {
         flex-direction: column;
-        min-width: 400px;
-        height: 300px;
         background-color: rgba(4, 42, 71, 1);
         opacity: 0;
-        border-width: 1px;
-        border-color: white;
-        border-radius: 2px;
 
         &.show {
             opacity: 1;
@@ -42,5 +25,10 @@
 
     .interaction-entry {
         font-size: 32px;
+        color: white;
+
+        &:hover {
+            color: yellow;
+        }
     }
 }

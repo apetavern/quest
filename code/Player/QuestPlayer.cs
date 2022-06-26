@@ -52,8 +52,6 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	public override void BuildInput( InputBuilder inputBuilder )
 	{
 		base.BuildInput( inputBuilder );
-
-		Controller?.BuildInput( inputBuilder );
 	}
 
 	public virtual void CreateHull()

@@ -2,13 +2,16 @@
 
 public partial class QuestPlayerControllerSimple : BasePlayerController
 {
-	[Net] public float WalkSpeed { get; set; } = 150f;
+	[Net, Predicted] public float WalkSpeed { get; set; } = 150f;
 	[Net] public float RunSpeed { get; set; } = 250f;
 
-	public static float GroundDistance { get; set; } = 0.25f;
+	public static float GroundDistance => 0.25f;
 
 	[Net, Predicted] public Vector3 TargetPosition { get; set; }
-	[Net] public bool ShouldMove { get; set; }
+	[Net, Predicted] public bool ShouldMove { get; set; }
+
+	private static Vector3 mins = new Vector3( -16, -16, 0 );
+	private static Vector3 maxs = new Vector3( 16, 16, 72 );
 
 	public QuestPlayerControllerSimple()
 	{
@@ -25,13 +28,6 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 		base.Simulate();
 
 		GetInput();
-
-		WishVelocity = new Vector3( Input.Forward, Input.Left, 0 );
-		var inSpeed = WishVelocity.Length.Clamp( 0, 1 );
-		WishVelocity *= Input.Rotation.Angles().WithPitch( 0 ).ToRotation();
-		WishVelocity = WishVelocity.WithZ( 0 );
-		WishVelocity = WishVelocity.Normal * inSpeed;
-		WishVelocity *= 1;
 
 		// Ensure our Player is touching the ground.
 		TouchGrass();
@@ -83,15 +79,18 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 			var vel = (TargetPosition - Position).WithZ( 0 ).Normal * WalkSpeed;
 			Rotation = Rotation.Lerp( Rotation, Rotation.LookAt( vel ), 64f );
 
-			MoveHelper move = new MoveHelper( Position, vel );
+			MoveHelper move = new( Position, Velocity );
 			move.TryMove( Time.Delta );
+			move.Velocity = vel;
+			move.MaxStandableAngle = 50f;
+			move.Trace = move.Trace.Ignore( Pawn ).Size( mins, maxs );
 
 			Position = move.Position;
 			Velocity = move.Velocity;
 		}
 		else
 		{
-			Velocity = 0;
+			Velocity = 0f;
 		}
 
 	}

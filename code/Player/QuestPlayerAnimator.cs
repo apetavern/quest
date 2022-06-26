@@ -6,6 +6,8 @@ public class QuestPlayerAnimator : PawnAnimator
 
 	public override void Simulate()
 	{
+		base.Simulate();
+
 		var idealRotation = Rotation.LookAt( Input.Rotation.Forward.WithZ( 0 ), Vector3.Up );
 
 		DoRotation( idealRotation );

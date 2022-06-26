@@ -1,0 +1,15 @@
+﻿InteractionHint {
+
+    .interaction-hint-label {
+        padding: 6px;
+        position: absolute;
+        font-size: 32px;
+        color: yellow;
+        text-stroke: 4px black;
+        opacity: 0;
+
+        &.show {
+            opacity: 1;
+        }
+    }
+}
