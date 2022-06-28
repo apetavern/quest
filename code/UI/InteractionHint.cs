@@ -31,6 +31,11 @@ public class InteractionHint : Panel
 				if ( Input.Pressed( InputButton.PrimaryAttack ) )
 				{
 					interaction.ClientResolve();
+
+					if ( interaction.ResolveOnServer )
+					{
+						Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
+					}
 				}
 			}
 			else if ( trace.Entity is WorldEntity )

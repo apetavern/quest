@@ -1,4 +1,7 @@
 ﻿using Quest.Systems.Interactions;
+using Quest.Systems.Inventory;
+using Quest.Systems.Items;
+using Quest.Systems.Items.Mining;
 
 namespace Quest.Player;
 
@@ -15,6 +18,8 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		get => Components.Get<CameraMode>();
 		set => Components.Add( value );
 	}
+
+	[BindComponent] public PlayerInventoryComponent Inventory { get; }
 
 	public ClothingContainer ClothingContainer { get; set; } = new();
 
@@ -34,6 +39,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		ClothingContainer.DressEntity( this );
+		Components.Create<PlayerInventoryComponent>();
 
 		CreateHull();
 
@@ -47,11 +53,6 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		base.Simulate( cl );
 
 		Controller?.Simulate( cl, this, Animator );
-	}
-
-	public override void BuildInput( InputBuilder inputBuilder )
-	{
-		base.BuildInput( inputBuilder );
 	}
 
 	public virtual void CreateHull()

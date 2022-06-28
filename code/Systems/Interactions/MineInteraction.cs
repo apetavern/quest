@@ -1,4 +1,7 @@
-﻿namespace Quest.Systems.Interactions;
+﻿using Quest.Player;
+using Quest.Systems.Items.Mining;
+
+namespace Quest.Systems.Interactions;
 
 public partial class MineInteraction : Interaction
 {
@@ -12,7 +15,16 @@ public partial class MineInteraction : Interaction
 
 	public override bool CanResolve => true;
 
-	public override bool ResolveOnServer => false;
+	public override bool ResolveOnServer => true;
+
+	protected override void OnServerResolve()
+	{
+		var player = Caller.Pawn as QuestPlayer;
+		var controller = player.Controller as QuestPlayerControllerSimple;
+
+		controller.MoveTo( Owner );
+		player.Inventory.AddItem( new Ore() );
+	}
 
 	protected override void OnClientResolve()
 	{

@@ -10,6 +10,8 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 	[Net, Predicted] public Vector3 TargetPosition { get; set; }
 	[Net, Predicted] public bool ShouldMove { get; set; }
 
+	private float ApproximatePositionOffset { get; set; } = 10f;
+
 	private static Vector3 mins = new Vector3( -16, -16, 0 );
 	private static Vector3 maxs = new Vector3( 16, 16, 72 );
 
@@ -69,7 +71,7 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 
 	private void Move()
 	{
-		if ( Position.AlmostEqual( TargetPosition, 10f ) )
+		if ( Position.AlmostEqual( TargetPosition, ApproximatePositionOffset ) )
 		{
 			ShouldMove = false;
 		}
@@ -91,8 +93,19 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 		else
 		{
 			Velocity = 0f;
+			ApproximatePositionOffset = 10f;
 		}
 
+	}
+
+	public void MoveTo( Entity entity )
+	{
+		Log.Info( "Moving to entity: " + entity.Name );
+		TargetPosition = entity.Position;
+		ShouldMove = true;
+
+		// Temporarily set the approximate distance so the player doesn't continually run into the target.
+		ApproximatePositionOffset = 64f;
 	}
 
 	[ConCmd.Server( name: "quest_test" )]

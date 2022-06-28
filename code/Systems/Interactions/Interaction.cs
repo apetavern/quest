@@ -8,6 +8,11 @@ public abstract partial class Interaction
 	public Entity Owner { get; set; }
 
 	/// <summary>
+	/// The caller of the interaction.
+	/// </summary>
+	public Client Caller { get; set; }
+
+	/// <summary>
 	/// The machine-readable identifier of the interaction.
 	/// </summary>
 	public virtual string ID => "";
@@ -65,6 +70,7 @@ public abstract partial class Interaction
 			if ( interaction is null )
 				return;
 
+			interaction.Caller = ConsoleSystem.Caller;
 			interaction.ServerResolve();
 		}
 	}

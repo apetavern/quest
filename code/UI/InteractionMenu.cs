@@ -36,6 +36,12 @@ public class InteractionMenu : Panel
 					label.AddEventListener( "onclick", () =>
 					{
 						interaction.ClientResolve();
+
+						if ( interaction.ResolveOnServer )
+						{
+							Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
+						}
+
 						InteractionEntryContainer.DeleteChildren();
 						InteractionMenuContainer.RemoveClass( "show" );
 					} );
