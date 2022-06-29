@@ -5,7 +5,7 @@ public partial class ExamineInteraction : Interaction
 	public override string ID => "examine_interaction";
 	public override string Name => "Examine";
 
-	public ExamineInteraction( Entity entity )
+	public ExamineInteraction( BaseNetworkable entity )
 	{
 		Owner = entity;
 	}

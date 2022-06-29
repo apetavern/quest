@@ -1,6 +1,6 @@
 ﻿using Quest.Systems.Interactions;
 
-namespace Quest.UI;
+namespace Quest.UI.Interactions;
 
 [UseTemplate]
 public class InteractionHint : Panel
@@ -19,7 +19,7 @@ public class InteractionHint : Panel
 			.Ignore( Local.Pawn )
 			.Run();
 
-		PrimaryAttackHintLabel.SetClass( "show", (trace.Entity is IInteractable) || (trace.Entity is WorldEntity) );
+		PrimaryAttackHintLabel.SetClass( "show", trace.Entity is IInteractable || trace.Entity is WorldEntity );
 
 		if ( trace.Hit )
 		{

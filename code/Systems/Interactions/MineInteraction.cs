@@ -22,12 +22,7 @@ public partial class MineInteraction : Interaction
 		var player = Caller.Pawn as QuestPlayer;
 		var controller = player.Controller as QuestPlayerControllerSimple;
 
-		controller.MoveTo( Owner );
+		controller.MoveTo( Owner as Entity );
 		player.Inventory.AddItem( new Ore() );
-	}
-
-	protected override void OnClientResolve()
-	{
-		ChatBox.Say( "Mine Interaction" );
 	}
 }

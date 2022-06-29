@@ -1,6 +1,8 @@
-﻿namespace Quest.Systems.Items;
+﻿using Quest.Systems.Interactions;
 
-public abstract partial class Item : BaseNetworkable
+namespace Quest.Systems.Items;
+
+public abstract partial class Item : BaseNetworkable, IInteractable
 {
 	/// <summary>
 	/// The machine-readable identifier of the item.
@@ -36,4 +38,23 @@ public abstract partial class Item : BaseNetworkable
 	/// The number of items we have in this item stack.
 	/// </summary>
 	[Net] public int InventoryStackCount { get; set; } = 1;
+
+	public abstract string GetExamineText();
+
+	public string GetInteracteeName()
+	{
+		return Name;
+	}
+
+	public IEnumerable<Interaction> GetInteractions()
+	{
+		IEnumerable<Interaction> interactions = new List<Interaction>()
+		{
+			new ExamineInteraction( this )
+		};
+
+		return interactions.Concat( GetAdditionalInteractions() );
+	}
+
+	public abstract IEnumerable<Interaction> GetAdditionalInteractions();
 }

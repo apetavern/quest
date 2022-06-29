@@ -1,6 +1,6 @@
 ﻿using Quest.Systems.Interactions;
 
-namespace Quest.UI;
+namespace Quest.UI.Interactions;
 
 [UseTemplate]
 public class InteractionMenu : Panel

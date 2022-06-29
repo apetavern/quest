@@ -5,7 +5,7 @@ public abstract partial class Interaction
 	/// <summary>
 	/// The owner of the interaction.
 	/// </summary>
-	public Entity Owner { get; set; }
+	public BaseNetworkable Owner { get; set; }
 
 	/// <summary>
 	/// The caller of the interaction.
