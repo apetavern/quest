@@ -2,8 +2,17 @@
     left: 120px;
     flex-direction: column;
 
+    &:hover {
+        // pointer-events: all
+    }
+
     label {
         font-size: 32px;
         text-stroke: 2px white;
+
+        &:hover {
+            pointer-events: all;
+            cursor: pointer;
+        }
     }
 }

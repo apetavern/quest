@@ -1,5 +1,4 @@
-﻿using Quest.Player;
-using Quest.Systems.Items;
+﻿using Quest.Systems.Items;
 using Quest.Systems.Inventory;
 
 namespace Quest.UI.Inventory;
@@ -21,7 +20,11 @@ public class InventoryDisplay : Panel
 
 		foreach ( var item in updatedInventory )
 		{
-			Add.Label( item.Name + " - " + item.InventoryStackCount );
+			Label label = Add.Label( item.Name + " - " + item.InventoryStackCount );
+			label.AddEventListener( "onclick", () =>
+			{
+				item.GetInteractions().First().ClientResolve();
+			} );
 		}
 	}
 }
