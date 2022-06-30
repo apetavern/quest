@@ -2,6 +2,7 @@
 using Quest.Systems.Inventory;
 using Quest.Systems.Items;
 using Quest.Systems.Items.Mining;
+using Quest.Systems.Skills;
 
 namespace Quest.Player;
 
@@ -20,6 +21,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	}
 
 	[BindComponent] public PlayerInventoryComponent Inventory { get; }
+	[BindComponent] public PlayerSkillComponent Skills { get; }
 
 	public ClothingContainer ClothingContainer { get; set; } = new();
 
@@ -36,10 +38,13 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	public override void Spawn()
 	{
 		base.Spawn();
-		SetModel( "models/citizen/citizen.vmdl" );
 
+		SetModel( "models/citizen/citizen.vmdl" );
 		ClothingContainer.DressEntity( this );
+
 		Components.Create<PlayerInventoryComponent>();
+		Components.Create<PlayerSkillComponent>();
+		Skills.PopulateSkills();
 
 		CreateHull();
 

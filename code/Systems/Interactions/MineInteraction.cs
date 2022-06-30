@@ -24,5 +24,6 @@ public partial class MineInteraction : Interaction
 
 		controller.MoveTo( Owner as Entity );
 		player.Inventory.AddItem( new Ore() );
+		player.Skills.AddExperience( "skill_mining", 10 );
 	}
 }

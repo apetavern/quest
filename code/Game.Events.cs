@@ -1,12 +1,13 @@
 ﻿using Quest.Player;
-using Quest.Systems.Inventory;
+using InvEvents = Quest.Systems.Inventory.GameEvent;
+using SkillEvents = Quest.Systems.Skills.GameEvent;
 
 namespace Quest;
 
 public partial class Game
 {
-	[GameEvent.Server.InventoryChanged]
-	public static void BridgeEvent( Client client )
+	[InvEvents.Server.InventoryChanged]
+	public static void BridgeInventoryChangedEvent( Client client )
 	{
 		SendClientInventoryChangedEvent( To.Single( client ) );
 	}
@@ -18,6 +19,18 @@ public partial class Game
 	[ClientRpc]
 	public static void SendClientInventoryChangedEvent()
 	{
-		Event.Run( GameEvent.Client.InventoryChanged, (Local.Pawn as QuestPlayer).Inventory.InventoryItems );
+		Event.Run( InvEvents.Client.InventoryChanged, (Local.Pawn as QuestPlayer).Inventory.InventoryItems );
+	}
+
+	[SkillEvents.Server.ExperienceAdded]
+	public static void BridgeExperienceAddedEvent( Client client, string skillId )
+	{
+		SendClientExperienceAddedEvent( To.Single( client ), skillId );
+	}
+
+	[ClientRpc]
+	public static void SendClientExperienceAddedEvent( string skillId )
+	{
+		Event.Run( SkillEvents.Client.ExperienceAdded, skillId );
 	}
 }
