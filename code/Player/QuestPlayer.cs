@@ -89,20 +89,4 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	{
 		return $"That {Client.Name} fella seems like an alright guy.";
 	}
-
-	[GameEvent.Server.InventoryChanged]
-	public void BridgeEvent()
-	{
-		SendClientEvent( To.Single( Client ) );
-	}
-
-	/*
-	 * ClientRpc necessary here due to bug in Components. See issue below:
-	 * https://github.com/Facepunch/sbox-issues/issues/1417
-	 */
-	[ClientRpc]
-	public static void SendClientEvent()
-	{
-		Event.Run( GameEvent.Client.InventoryChanged, (Local.Pawn as QuestPlayer).Inventory.InventoryItems );
-	}
 }

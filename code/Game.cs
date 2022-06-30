@@ -8,11 +8,12 @@ global using System.Collections.Generic;
 global using System.Linq;
 
 using Quest.Player;
+using Quest.Systems.Grid;
 using Quest.UI;
 
 namespace Quest;
 
-public class Game : Sandbox.Game
+public partial class Game : Sandbox.Game
 {
 	public QuestHud Hud { get; set; }
 

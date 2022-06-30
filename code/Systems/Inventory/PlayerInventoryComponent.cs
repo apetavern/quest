@@ -24,6 +24,6 @@ public partial class PlayerInventoryComponent : EntityComponent
 		else
 			InventoryItems.Add( newItem );
 
-		Event.Run( GameEvent.Server.InventoryChanged );
+		Event.Run( GameEvent.Server.InventoryChanged, Entity.Client );
 	}
 }
