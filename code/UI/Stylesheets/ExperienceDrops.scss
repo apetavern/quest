@@ -1,0 +1,35 @@
+﻿ExperienceDrops {
+    position: absolute;
+    right: 256px;
+    top: 200px;
+
+    Drop {
+        position: absolute;
+        animation-name: float-up;
+        animation-duration: 2s;
+        flex-direction: row;
+        align-items: center;
+
+        .skill-icon {
+            max-width: 32px;
+            max-height: 32px;
+        }
+
+        .experience-label {
+            font-size: 24px;
+            color: white;
+            text-stroke: 4px black;
+            padding-left: 12px;
+        }
+    }
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(-80px);
+    }
+}

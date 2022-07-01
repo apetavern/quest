@@ -10,12 +10,12 @@ public partial class PlayerSkillComponent : EntityComponent
 		Skills.Add( new MiningSkill() );
 	}
 
-	public void AddExperience( string skillId, int experience )
+	public void AddExperience( SkillType skillType, int experience )
 	{
-		Skill skill = Skills.Where( skill => skill.ID == skillId ).First();
+		Skill skill = Skills.Where( skill => skill.ID == skillType.ToString() ).First();
 		skill.Experience += experience;
 
-		Event.Run( GameEvent.Server.ExperienceAdded, Entity.Client, skillId );
+		Event.Run( GameEvent.Server.ExperienceAdded, Entity.Client, skillType );
 
 		Log.Info( $"skill xp: {skill.Experience}" );
 	}

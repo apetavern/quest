@@ -1,4 +1,5 @@
 ﻿using Quest.Player;
+using Quest.Systems.Skills;
 using InvEvents = Quest.Systems.Inventory.GameEvent;
 using SkillEvents = Quest.Systems.Skills.GameEvent;
 
@@ -23,14 +24,14 @@ public partial class Game
 	}
 
 	[SkillEvents.Server.ExperienceAdded]
-	public static void BridgeExperienceAddedEvent( Client client, string skillId )
+	public void BridgeExperienceAddedEvent( Client client, SkillType skillType )
 	{
-		SendClientExperienceAddedEvent( To.Single( client ), skillId );
+		SendClientExperienceAddedEvent( To.Single( client ), skillType );
 	}
 
 	[ClientRpc]
-	public static void SendClientExperienceAddedEvent( string skillId )
+	public void SendClientExperienceAddedEvent( SkillType skillType )
 	{
-		Event.Run( SkillEvents.Client.ExperienceAdded, skillId );
+		Event.Run( SkillEvents.Client.ExperienceAdded, skillType );
 	}
 }

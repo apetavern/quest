@@ -1,7 +1,5 @@
 ﻿using Quest.Systems.Interactions;
 using Quest.Systems.Inventory;
-using Quest.Systems.Items;
-using Quest.Systems.Items.Mining;
 using Quest.Systems.Skills;
 
 namespace Quest.Player;
