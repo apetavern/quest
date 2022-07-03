@@ -1,4 +1,5 @@
 ﻿using Quest.Systems.Items;
+using Quest.Systems.States;
 
 namespace Quest.Player;
 
@@ -37,10 +38,15 @@ public partial class QuestPlayerAnimator : PawnAnimator
 			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
 		}
 
-		if ( Input.Pressed( InputButton.Jump ) )
+		if ( Host.IsClient && player.StateMachine.StateMachine.ActiveState is MiningState )
 		{
 			SetAnimParameter( "b_attack", true );
 		}
+		/*		Log.Info( Host.Name + " " + player.StateMachine );
+				if ( player.StateMachine.StateMachine.ActiveState is MiningState )
+				{
+					SetAnimParameter( "b_attack", true );
+				}*/
 	}
 
 	public virtual void DoRotation( Rotation idealRotation )

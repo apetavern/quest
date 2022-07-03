@@ -5,8 +5,7 @@ public partial class StateMachineComponent : EntityComponent
 	/// <summary>
 	/// The active StateMachine
 	/// </summary>
-	[Net]
-	public StateMachine StateMachine { get; set; }
+	[Net] public StateMachine StateMachine { get; set; }
 
 	public void Init()
 	{
