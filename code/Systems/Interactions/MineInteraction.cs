@@ -1,6 +1,8 @@
-﻿using Quest.Player;
+﻿using Quest.Entities;
+using Quest.Player;
 using Quest.Systems.Items.Mining;
 using Quest.Systems.Skills;
+using Quest.Systems.States;
 
 namespace Quest.Systems.Interactions;
 
@@ -22,12 +24,10 @@ public partial class MineInteraction : Interaction
 	{
 		var player = Caller.Pawn as QuestPlayer;
 		var controller = player.Controller as QuestPlayerControllerSimple;
+		player.StateMachine.ChangeStateMachine( new MiningStateMachine( Owner as OreDeposit ) );
 
-		if ( player.ActiveChild is not PickaxeCarriable )
-			return;
-
-		controller.MoveTo( Owner as Entity );
-		player.Inventory.AddItem( new Ore() );
-		player.Skills.AddExperience( SkillType.skill_mining, 10 );
+		/*		controller.MoveTo( Owner as Entity );
+				player.Inventory.AddItem( new Ore() );
+				player.Skills.AddExperience( SkillType.skill_mining, 10 );*/
 	}
 }

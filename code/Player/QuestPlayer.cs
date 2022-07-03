@@ -2,6 +2,7 @@
 using Quest.Systems.Inventory;
 using Quest.Systems.Items.Mining;
 using Quest.Systems.Skills;
+using Quest.Systems.States;
 
 namespace Quest.Player;
 
@@ -27,6 +28,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 	[BindComponent] public PlayerInventoryComponent Inventory { get; }
 	[BindComponent] public PlayerSkillComponent Skills { get; }
+	[BindComponent] public StateMachineComponent StateMachine { get; }
 
 	public ClothingContainer ClothingContainer { get; set; } = new();
 
@@ -49,7 +51,10 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 		Components.Create<PlayerInventoryComponent>();
 		Components.Create<PlayerSkillComponent>();
+		Components.Create<StateMachineComponent>();
+
 		Skills.PopulateSkills();
+		StateMachine.Init();
 
 		CreateHull();
 
@@ -64,9 +69,11 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 		SimulateActiveChild( cl, ActiveChild );
 		Controller?.Simulate( cl, this, Animator );
+		StateMachine.StateMachine?.Simulate();
 
 		if ( Input.Pressed( InputButton.Jump ) )
 		{
+
 			if ( Host.IsServer )
 			{
 				var pickaxe = new Pickaxe();

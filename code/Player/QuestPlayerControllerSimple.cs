@@ -108,6 +108,16 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 		ApproximatePositionOffset = 64f;
 	}
 
+	public void MoveTo( Vector3 position )
+	{
+		Log.Info( "Moving to position: " + position );
+		TargetPosition = position;
+		ShouldMove = true;
+
+		// Temporarily set the approximate distance so the player doesn't continually run into the target.
+		ApproximatePositionOffset = 64f;
+	}
+
 	[ConCmd.Server( name: "quest_test" )]
 	public static void MoveIt()
 	{
