@@ -11,6 +11,7 @@ public partial class MiningState : State
 
 	[Net] public OreDeposit Target { get; set; }
 	[Net] public TimeUntil MiningTime { get; set; }
+	[Net] public bool ShouldMine { get; set; } = false;
 
 	public MiningState() { }
 
@@ -25,10 +26,14 @@ public partial class MiningState : State
 		DebugOverlay.ScreenText( Target.Name, 1 );
 		var player = Owner as QuestPlayer;
 
-		if ( MiningTime <= 0f )
+		if ( MiningTime <= 0f && ShouldMine )
 		{
-			player.Inventory.AddItem( new Ore() );
-			player.Skills.AddExperience( Skills.SkillType.skill_mining, 10 );
+			if ( Host.IsServer )
+			{
+				player.Inventory.AddItem( new Ore() );
+				player.Skills.AddExperience( Skills.SkillType.skill_mining, 10 );
+			}
+
 			Done = true;
 		}
 	}
@@ -45,6 +50,7 @@ public partial class MiningState : State
 		}
 		else
 		{
+			ShouldMine = true;
 			MiningTime = 1f;
 		}
 	}

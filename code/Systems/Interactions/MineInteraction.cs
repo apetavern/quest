@@ -25,9 +25,5 @@ public partial class MineInteraction : Interaction
 		var player = Caller.Pawn as QuestPlayer;
 		var controller = player.Controller as QuestPlayerControllerSimple;
 		player.StateMachine.ChangeStateMachine( new MiningStateMachine( Owner as OreDeposit ) );
-
-		/*		controller.MoveTo( Owner as Entity );
-				player.Inventory.AddItem( new Ore() );
-				player.Skills.AddExperience( SkillType.skill_mining, 10 );*/
 	}
 }
