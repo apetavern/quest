@@ -1,5 +1,6 @@
 ﻿using Quest.Systems.Interactions;
 using Quest.Systems.Inventory;
+using Quest.Systems.Items.Mining;
 using Quest.Systems.Skills;
 
 namespace Quest.Player;
@@ -11,6 +12,12 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 	[Net, Predicted]
 	public PawnAnimator Animator { get; set; }
+
+	[Net, Predicted]
+	public BaseCarriable ActiveChild { get; set; }
+
+	[Net, Predicted]
+	public BaseCarriable LastActiveChild { get; set; }
 
 	public CameraMode Camera
 	{
@@ -37,7 +44,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	{
 		base.Spawn();
 
-		SetModel( "models/citizen/citizen.vmdl" );
+		SetModel( "models/player/citizen_quest.vmdl" );
 		ClothingContainer.DressEntity( this );
 
 		Components.Create<PlayerInventoryComponent>();
@@ -55,7 +62,19 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	{
 		base.Simulate( cl );
 
+		SimulateActiveChild( cl, ActiveChild );
 		Controller?.Simulate( cl, this, Animator );
+
+		if ( Input.Pressed( InputButton.Jump ) )
+		{
+			if ( Host.IsServer )
+			{
+				var pickaxe = new Pickaxe();
+				Inventory.AddItem( pickaxe );
+				ActiveChild = pickaxe.GetCarriable();
+				ActiveChild.OnCarryStart( this );
+			}
+		}
 	}
 
 	public virtual void CreateHull()
@@ -66,6 +85,26 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 		MoveType = MoveType.MOVETYPE_WALK;
 		EnableHitboxes = true;
+	}
+
+	public virtual void SimulateActiveChild( Client client, BaseCarriable child )
+	{
+		if ( LastActiveChild != child )
+		{
+			OnActiveChildChanged( LastActiveChild, child );
+			LastActiveChild = child;
+		}
+
+		if ( !LastActiveChild.IsValid() )
+			return;
+
+		LastActiveChild.Simulate( client );
+	}
+
+	public virtual void OnActiveChildChanged( BaseCarriable previous, BaseCarriable next )
+	{
+		previous?.ActiveEnd( this, previous.Owner != this );
+		next?.ActiveStart( this );
 	}
 
 	public override void FrameSimulate( Client cl )

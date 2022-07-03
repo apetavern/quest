@@ -1,12 +1,16 @@
-﻿namespace Quest.Player;
+﻿using Quest.Systems.Items;
 
-public class QuestPlayerAnimator : PawnAnimator
+namespace Quest.Player;
+
+public partial class QuestPlayerAnimator : PawnAnimator
 {
 	TimeSince TimeSinceFootShuffle = 60;
 
 	public override void Simulate()
 	{
 		base.Simulate();
+
+		var player = Local.Pawn as QuestPlayer;
 
 		var idealRotation = Rotation.LookAt( Input.Rotation.Forward.WithZ( 0 ), Vector3.Up );
 
@@ -23,9 +27,19 @@ public class QuestPlayerAnimator : PawnAnimator
 		SetAnimParameter( "b_noclip", noclip );
 		SetAnimParameter( "b_sit", sitting );
 
+		if ( player.IsValid() && player.ActiveChild is Carriable carriable )
+		{
+			carriable.SimulateAnimator( this );
+		}
+
 		if ( Host.IsClient && Client.IsValid() )
 		{
 			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
+		}
+
+		if ( Input.Pressed( InputButton.Jump ) )
+		{
+			SetAnimParameter( "b_attack", true );
 		}
 	}
 
