@@ -5,12 +5,12 @@ public abstract partial class StateMachine : BaseNetworkable
 	/// <summary>
 	/// Networked list of states.
 	/// </summary>
-	[Net] public IList<State> States { get; set; }
+	[Net, SkipHotload] public IList<State> States { get; set; }
 
 	/// <summary>
 	/// The currently active state.
 	/// </summary>
-	[Net] public State ActiveState { get; set; }
+	[Net, SkipHotload] public State ActiveState { get; set; }
 
 	/// <summary>
 	/// The owner of this machine.

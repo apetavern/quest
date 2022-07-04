@@ -5,7 +5,9 @@ namespace Quest.Player;
 
 public partial class QuestPlayerAnimator : PawnAnimator
 {
-	TimeSince TimeSinceFootShuffle = 60;
+	TimeSince TimeSinceFootShuffle = 60f;
+	TimeUntil TimeUntilNextMineAnim = 2f;
+	bool ShouldMine = false;
 
 	public override void Simulate()
 	{
@@ -38,15 +40,19 @@ public partial class QuestPlayerAnimator : PawnAnimator
 			SetAnimParameter( "voice", Client.TimeSinceLastVoice < 0.5f ? Client.VoiceLevel : 0.0f );
 		}
 
-		if ( Host.IsClient && player.StateMachine.StateMachine.ActiveState is MiningState )
+		if ( Host.IsClient && player.StateMachine.StateMachine.ActiveState is MiningState && !ShouldMine )
 		{
+			Log.Info( Host.Name + " test" );
+			ShouldMine = true;
 			SetAnimParameter( "b_attack", true );
+			TimeUntilNextMineAnim = 1f;
 		}
-		/*		Log.Info( Host.Name + " " + player.StateMachine );
-				if ( player.StateMachine.StateMachine.ActiveState is MiningState )
-				{
-					SetAnimParameter( "b_attack", true );
-				}*/
+
+		if ( Host.IsClient && ShouldMine && TimeUntilNextMineAnim <= 0f )
+		{
+			Log.Info( "ShouldMine false" );
+			ShouldMine = false;
+		}
 	}
 
 	public virtual void DoRotation( Rotation idealRotation )
