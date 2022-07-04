@@ -14,10 +14,10 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	[Net, Predicted]
 	public PawnAnimator Animator { get; set; }
 
-	[Net, Predicted]
+	[Net]
 	public BaseCarriable ActiveChild { get; set; }
 
-	[Net, Predicted]
+	[Net]
 	public BaseCarriable LastActiveChild { get; set; }
 
 	public CameraMode Camera
@@ -31,6 +31,8 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	[BindComponent] public StateMachineComponent StateMachine { get; }
 
 	public ClothingContainer ClothingContainer { get; set; } = new();
+
+	[Net] TimeUntil TimeUntilNextMineAnim { get; set; } = 1f;
 
 	public QuestPlayer()
 	{
@@ -71,16 +73,22 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		Controller?.Simulate( cl, this, Animator );
 		StateMachine.StateMachine?.Simulate();
 
+		if ( StateMachine.StateMachine.ActiveState is MiningState && TimeUntilNextMineAnim <= 0f )
+		{
+			SetAnimParameter( "b_attack", true );
+			TimeUntilNextMineAnim = 1f;
+		}
+
 		if ( Input.Pressed( InputButton.Jump ) )
 		{
-
-			if ( Host.IsServer )
+			if ( IsServer )
 			{
 				var pickaxe = new Pickaxe();
 				Inventory.AddItem( pickaxe );
 				ActiveChild = pickaxe.GetCarriable();
 				ActiveChild.OnCarryStart( this );
 			}
+
 		}
 	}
 

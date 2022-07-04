@@ -51,7 +51,7 @@ public partial class MiningState : State
 		else
 		{
 			ShouldMine = true;
-			MiningTime = 1f;
+			MiningTime = 3f;
 		}
 	}
 

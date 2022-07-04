@@ -16,7 +16,7 @@
     "GameNetworkType": 0,
     "MapSelect": 3,
     "MapList": [
-      "local.quest-test"
+      "apetavern.quest-test"
     ],
     "RankType": 0,
     "PerMapRanking": false,
