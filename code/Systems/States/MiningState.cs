@@ -13,14 +13,10 @@ public partial class MiningState : State
 	[Net] public TimeUntil MiningTime { get; set; }
 	[Net] public bool ShouldMine { get; set; } = false;
 
+	private TimeSince TimeSinceLastHit { get; set; }
 
-	TimeSince TimeSinceLastHit { get; set; }
-
-	bool DoJiggle;
-
-	Vector3 startPosition;
-
-	Rotation startRotation;
+	private bool doJiggle;
+	private Rotation initialRot;
 
 	public MiningState() { }
 
@@ -28,8 +24,9 @@ public partial class MiningState : State
 	{
 		Target = target;
 		Owner = owner;
-		startPosition = target.Position;
-		startRotation = target.Rotation;
+
+		// Store initial rotation of the Ore Deposit.
+		initialRot = target.Rotation;
 	}
 
 	public override void Simulate()
@@ -37,27 +34,7 @@ public partial class MiningState : State
 		DebugOverlay.ScreenText( Target.Name, 1 );
 		var player = Owner as QuestPlayer;
 
-
-		bool shouldJiggle = MathF.Round( TimeSinceLastHit * 10f ) / 10f == 0.3f;
-
-		if ( Host.IsServer && ShouldMine && shouldJiggle )
-		{
-			float RFloat = Rand.Float( -2f, 2f );
-			Target.Position += new Vector3( RFloat, RFloat, 0f );
-			Target.Rotation += new Angles( RFloat * 0.1f, 0, RFloat * 0.1f ).ToRotation();
-		}
-
-		if ( Host.IsServer && ShouldMine && TimeSinceLastHit > 1f )
-		{
-			TimeSinceLastHit = !DoJiggle ? -1f : 0f; //Has to wait a second extra because of animation start delay
-			DoJiggle = true;
-		}
-
-		if ( Host.IsServer && ShouldMine )
-		{
-			Target.Position = Vector3.Lerp( Target.Position, startPosition, 0.5f );
-			Target.Rotation = Rotation.Lerp( Target.Rotation, startRotation, 0.5f );
-		}
+		OnHitEffects();
 
 		if ( MiningTime <= 0f && ShouldMine )
 		{
@@ -65,7 +42,10 @@ public partial class MiningState : State
 			{
 				player.Inventory.AddItem( new Ore() );
 				player.Skills.AddExperience( Skills.SkillType.skill_mining, 10 );
-				DoJiggle = false;
+
+				Target.Depleted = true;
+				Target.TimeSinceDepleted = 0f;
+				doJiggle = false;
 			}
 
 			Done = true;
@@ -92,5 +72,30 @@ public partial class MiningState : State
 	public override void Stop()
 	{
 
+	}
+
+	private void OnHitEffects()
+	{
+		if ( Host.IsServer )
+		{
+			bool shouldJiggle = (0.3f <= TimeSinceLastHit && TimeSinceLastHit < 0.4f);
+
+			if ( ShouldMine && shouldJiggle )
+			{
+				Target.Rotation *= .97f;
+			}
+
+			if ( ShouldMine && TimeSinceLastHit > 1f )
+			{
+				// Wait an extra second due to animation start delay.
+				TimeSinceLastHit = !doJiggle ? -1f : 0f;
+				doJiggle = true;
+			}
+
+			if ( ShouldMine )
+			{
+				Target.Rotation = Rotation.Lerp( Target.Rotation, initialRot, 0.5f );
+			}
+		}
 	}
 }

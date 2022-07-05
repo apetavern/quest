@@ -4,11 +4,16 @@ namespace Quest.Entities;
 
 [HammerEntity]
 [Library( "quest_ore_deposit" )]
-[Title( "Ore Deposit" )]
+[Title( "Copper Ore Deposit" )]
 [Category( "World Entities" )]
-[EditorModel( "models/resources/copper_orevein/copper_orevein.vmdl" )]
-public class OreDeposit : ModelEntity, IInteractable
+[EditorModel( COPPER_OREVEIN_MODEL_PATH )]
+public partial class OreDeposit : ModelEntity, IInteractable
 {
+	[Net] public bool Depleted { get; set; } = false;
+	[Net] public TimeSince TimeSinceDepleted { get; set; }
+
+	private const string COPPER_OREVEIN_MODEL_PATH = "models/resources/copper_orevein/copper_orevein.vmdl";
+
 	public string GetInteracteeName()
 	{
 		return "Ore Deposit";
@@ -28,8 +33,26 @@ public class OreDeposit : ModelEntity, IInteractable
 		base.Spawn();
 
 		CreateHull();
-		SetModel( "models/resources/copper_orevein/copper_orevein.vmdl" );
+		SetModel( COPPER_OREVEIN_MODEL_PATH );
 		Rotation = new Angles( 0, Rand.Float( 0, 360 ), 0 ).ToRotation();
+	}
+
+	[Event.Tick]
+	public void Tick()
+	{
+		if ( Depleted && TimeSinceDepleted > 8f )
+		{
+			Depleted = false;
+		}
+
+		if ( Depleted && Model.Name == COPPER_OREVEIN_MODEL_PATH )
+		{
+			// SetModel to depleted, or destroy?
+		}
+		else
+		{
+			SetModel( COPPER_OREVEIN_MODEL_PATH );
+		}
 	}
 
 	public override void StartTouch( Entity other )
