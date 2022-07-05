@@ -6673,7 +6673,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = ""
-					m_vecPosition = [ 1808.0, -3312.0 ]
+					m_vecPosition = [ 1728.0, -3392.0 ]
 					m_nNodeID = 
 					{
 						m_id = 140358732
@@ -8550,7 +8550,7 @@
 				{
 					_class = "CLookAtAnimNode"
 					m_sName = "Upper Body Aim - Relaxed"
-					m_vecPosition = [ 864.0, -3376.0 ]
+					m_vecPosition = [ 864.0, -3408.0 ]
 					m_nNodeID = 
 					{
 						m_id = 273026180
@@ -18998,7 +18998,7 @@
 				{
 					_class = "CStateMachineAnimNode"
 					m_sName = "Post-aim additives SM"
-					m_vecPosition = [ 2032.0, -3200.0 ]
+					m_vecPosition = [ 2256.0, -3232.0 ]
 					m_nNodeID = 
 					{
 						m_id = 916628474
@@ -19035,18 +19035,18 @@
 											}
 										},
 									]
-									m_blendDuration = 0.05
+									m_blendDuration = 0.5
 									m_destState = 
 									{
 										m_id = 1228346111
 									}
-									m_bReset = true
+									m_bReset = false
 									m_resetCycleOption = "Beginning"
 									m_flFixedCycleValue = 0.0
 									m_blendCurve = 
 									{
-										m_vControlPoint1 = [ 0.5, 0.0 ]
-										m_vControlPoint2 = [ 0.5, 1.0 ]
+										m_vControlPoint1 = [ 0.75, 0.0 ]
+										m_vControlPoint2 = [ 1.0, 1.0 ]
 									}
 									m_bForceFootPlant = false
 									m_bDisabled = false
@@ -19113,7 +19113,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 140358732
+									m_id = 1600871519
 								}
 								m_outputID = 
 								{
@@ -19292,7 +19292,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1824201978
+									m_id = 1600871519
 								}
 								m_outputID = 
 								{
@@ -19407,7 +19407,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1824201978
+									m_id = 1600871519
 								}
 								m_outputID = 
 								{
@@ -36495,6 +36495,60 @@
 			{
 				key = 
 				{
+					m_id = 1600871519
+				}
+				value = 
+				{
+					_class = "CBoneMaskAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ 2000.0, -3344.0 ]
+					m_nNodeID = 
+					{
+						m_id = 1600871519
+					}
+					m_networkMode = "ClientPredicted"
+					m_sNote = ""
+					m_weightListName = "Weapon_2H_Full"
+					m_inputConnection1 = 
+					{
+						m_nodeID = 
+						{
+							m_id = 1409091261
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_inputConnection2 = 
+					{
+						m_nodeID = 
+						{
+							m_id = 140358732
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_blendSpace = "BlendSpace_Parent"
+					m_bUseBlendScale = false
+					m_blendValueSource = "Parameter"
+					m_blendParameter = 
+					{
+						m_id = 4294967295
+					}
+					m_timingBehavior = "UseChild2"
+					m_flTimingBlend = 0.5
+					m_flRootMotionBlend = 0.0
+					m_footMotionTiming = "Child1"
+					m_bResetChild1 = true
+					m_bResetChild2 = true
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 1614367656
 				}
 				value = 
@@ -38559,28 +38613,6 @@
 						m_fMinSpeed = 0.0
 						m_fMaxTension = 1000.0
 					}
-				}
-			},
-			{
-				key = 
-				{
-					m_id = 1824201978
-				}
-				value = 
-				{
-					_class = "CSequenceAnimNode"
-					m_sName = ""
-					m_vecPosition = [ 1808.0, -3168.0 ]
-					m_nNodeID = 
-					{
-						m_id = 1824201978
-					}
-					m_networkMode = "ClientPredicted"
-					m_sNote = ""
-					m_tagSpans = [  ]
-					m_sequenceName = "pickaxe_chop"
-					m_playbackSpeed = 1.0
-					m_bLoop = false
 				}
 			},
 			{
