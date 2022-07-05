@@ -1,6 +1,6 @@
 ﻿namespace Quest.Systems.States;
 
-public abstract partial class StateMachine : BaseNetworkable
+public abstract partial class StateMachine : BaseNetworkable, IHotloadManaged
 {
 	/// <summary>
 	/// Networked list of states.
@@ -38,5 +38,10 @@ public abstract partial class StateMachine : BaseNetworkable
 		ActiveState = @new;
 		ActiveState.Owner = Owner;
 		ActiveState.Start();
+	}
+
+	public void Created( IReadOnlyDictionary<string, object> state )
+	{
+		ActiveState = new IdleState();
 	}
 }

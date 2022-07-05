@@ -28,7 +28,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 	[BindComponent] public PlayerInventoryComponent Inventory { get; }
 	[BindComponent] public PlayerSkillComponent Skills { get; }
-	[BindComponent] public StateMachineComponent StateMachine { get; }
+	[Net] public StateMachine StateMachine { get; set; }
 
 	public ClothingContainer ClothingContainer { get; set; } = new();
 
@@ -53,10 +53,10 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 		Components.Create<PlayerInventoryComponent>();
 		Components.Create<PlayerSkillComponent>();
-		Components.Create<StateMachineComponent>();
 
 		Skills.PopulateSkills();
-		StateMachine.Init();
+		StateMachine = new IdleStateMachine();
+		StateMachine.Start();
 
 		CreateHull();
 
@@ -71,9 +71,9 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 
 		SimulateActiveChild( cl, ActiveChild );
 		Controller?.Simulate( cl, this, Animator );
-		StateMachine.StateMachine?.Simulate();
+		StateMachine?.Simulate();
 
-		if ( StateMachine.StateMachine.ActiveState is MiningState && TimeUntilNextMineAnim <= 0f )
+		if ( StateMachine.ActiveState is MiningState && TimeUntilNextMineAnim <= 0f )
 		{
 			SetAnimParameter( "b_attack", true );
 			TimeUntilNextMineAnim = 1f;
@@ -145,5 +145,13 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 	public string GetExamineText()
 	{
 		return $"That {Client.Name} fella seems like an alright guy.";
+	}
+
+	public void ChangeStateMachine( StateMachine @new )
+	{
+		StateMachine?.Stop();
+		StateMachine = @new;
+		StateMachine.Owner = this;
+		StateMachine?.Start();
 	}
 }

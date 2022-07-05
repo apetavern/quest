@@ -24,7 +24,7 @@ public partial class MiningStateMachine : PlayerStateMachine
 			if ( StateIndex >= States.Count )
 			{
 				var player = Owner as QuestPlayer;
-				player.StateMachine.ChangeStateMachine( new IdleStateMachine() );
+				player.ChangeStateMachine( new IdleStateMachine() );
 			}
 			else
 			{

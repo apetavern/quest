@@ -23,7 +23,6 @@ public partial class MineInteraction : Interaction
 	protected override void OnServerResolve()
 	{
 		var player = Caller.Pawn as QuestPlayer;
-		var controller = player.Controller as QuestPlayerControllerSimple;
-		player.StateMachine.ChangeStateMachine( new MiningStateMachine( Owner as OreDeposit ) );
+		player.ChangeStateMachine( new MiningStateMachine( Owner as OreDeposit ) );
 	}
 }
