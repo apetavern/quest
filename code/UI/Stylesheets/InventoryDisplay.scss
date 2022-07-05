@@ -1,10 +1,38 @@
 ﻿InventoryDisplay {
-    left: 120px;
-    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 380px;
+    height: 640px;
+    background-color: rgba(80, 80, 60, 0.7);
+    padding: 24px;
+    flex-wrap: wrap;
+    border-left: 3px rgb(50, 50, 40);
+    border-top: 3px rgb(50, 50, 40);
+    border-top-left-radius: 3px;
 
-    label {
-        font-size: 32px;
-        text-stroke: 2px white;
+    &:hover {
+        pointer-events: all;
+    }
+
+    InventoryItem {
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+
+        .item-icon {
+        }
+
+        .item-count {
+            position: relative;
+            color: yellow;
+            text-stroke: 2px black;
+            font-size: 18px;
+
+            &.hide {
+                opacity: 0;
+            }
+        }
 
         &:hover {
             pointer-events: all;

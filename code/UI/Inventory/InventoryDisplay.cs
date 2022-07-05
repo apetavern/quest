@@ -8,6 +8,7 @@ public class InventoryDisplay : Panel
 {
 	public List<Item> Inventory { get; set; }
 
+
 	public InventoryDisplay()
 	{
 
@@ -17,14 +18,56 @@ public class InventoryDisplay : Panel
 	public void InventoryChanged( IList<Item> updatedInventory )
 	{
 		DeleteChildren();
+		Inventory = updatedInventory.ToList();
+		BuildInventory();
+	}
 
-		foreach ( var item in updatedInventory )
+	private void BuildInventory()
+	{
+		foreach ( var item in Inventory )
 		{
-			Label label = Add.Label( item.Name + " - " + item.InventoryStackCount );
-			label.AddEventListener( "onclick", () =>
-			{
-				item.GetInteractions().First().ClientResolve();
-			} );
+			var invItem = new InventoryItem( item );
+			AddChild( invItem );
 		}
 	}
+}
+
+public partial class InventoryItem : Panel
+{
+	public Item Item { get; private set; }
+	public Image Icon { get; private set; }
+	public Label Count { get; private set; }
+
+	public InventoryItem( Item item )
+	{
+		Item = item;
+
+		var invIconPath = item.InventoryAssetPath;
+		var count = item.InventoryStackCount;
+
+		if ( invIconPath == null || invIconPath.Length == 0 )
+		{
+			Log.Error( $"{item.ID} has a null or empty icon!" );
+		}
+
+		Icon = Add.Image( invIconPath, "item-icon" );
+		Count = Add.Label( count.ToString(), "item-count" );
+
+		if ( count == 1 )
+		{
+			Count.AddClass( "hide" );
+		}
+
+		AddEventListener( "onclick", () =>
+		{
+			Log.Info( "OnClick" );
+		} );
+
+		AddEventListener( "onrightclick", () =>
+		{
+			Log.Info( "Rightclick" );
+		} );
+	}
+
+
 }

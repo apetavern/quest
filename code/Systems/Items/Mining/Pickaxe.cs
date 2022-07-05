@@ -6,6 +6,7 @@ public partial class Pickaxe : Item
 {
 	public override string ID => "item_pickaxe";
 	public override string Name => "Pickaxe";
+	public override string InventoryAssetPath => "/ui/items/pickaxe.png";
 
 	public override IEnumerable<Interaction> GetAdditionalInteractions()
 	{

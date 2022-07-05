@@ -6,6 +6,7 @@ public partial class Ore : Item
 {
 	public override string ID => "item_ore";
 	public override string Name => "Ore";
+	public override string InventoryAssetPath => "/ui/items/ore.png";
 
 	public override IEnumerable<Interaction> GetAdditionalInteractions()
 	{
