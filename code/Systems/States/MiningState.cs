@@ -37,7 +37,10 @@ public partial class MiningState : State
 		DebugOverlay.ScreenText( Target.Name, 1 );
 		var player = Owner as QuestPlayer;
 
-		if ( Host.IsServer && ShouldMine && MathF.Round( TimeSinceLastHit * 10f ) / 10f == 0.3f )
+
+		bool shouldJiggle = MathF.Round( TimeSinceLastHit * 10f ) / 10f == 0.3f;
+
+		if ( Host.IsServer && ShouldMine && shouldJiggle )
 		{
 			float RFloat = Rand.Float( -2f, 2f );
 			Target.Position += new Vector3( RFloat, RFloat, 0f );
