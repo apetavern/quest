@@ -6,6 +6,7 @@ namespace Quest.Entities;
 [Library( "quest_ore_deposit" )]
 [Title( "Ore Deposit" )]
 [Category( "World Entities" )]
+[EditorModel( "models/resources/copper_orevein/copper_orevein.vmdl" )]
 public class OreDeposit : ModelEntity, IInteractable
 {
 	public string GetInteracteeName()
@@ -27,7 +28,8 @@ public class OreDeposit : ModelEntity, IInteractable
 		base.Spawn();
 
 		CreateHull();
-		SetModel( "models/rocka.vmdl" );
+		SetModel( "models/resources/copper_orevein/copper_orevein.vmdl" );
+		Rotation = new Angles( 0, Rand.Float( 0, 360 ), 0 ).ToRotation();
 	}
 
 	public override void StartTouch( Entity other )
