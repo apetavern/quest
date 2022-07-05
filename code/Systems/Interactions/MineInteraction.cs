@@ -1,7 +1,5 @@
 ﻿using Quest.Entities;
 using Quest.Player;
-using Quest.Systems.Items.Mining;
-using Quest.Systems.Skills;
 using Quest.Systems.States;
 
 namespace Quest.Systems.Interactions;
@@ -23,6 +21,14 @@ public partial class MineInteraction : Interaction
 	protected override void OnServerResolve()
 	{
 		var player = Caller.Pawn as QuestPlayer;
+		var oreDeposit = Owner as OreDeposit;
+
+		if ( oreDeposit.Depleted )
+		{
+			Log.Info( "This ore deposit is depleted!" );
+			return;
+		}
+
 		player.ChangeStateMachine( new MiningStateMachine( Owner as OreDeposit ) );
 	}
 }
