@@ -82,7 +82,7 @@ public partial class MiningState : State
 
 			if ( ShouldMine && shouldJiggle )
 			{
-				Target.Rotation *= .97f;
+				Target.Rotation = Target.Rotation.RotateAroundAxis( Vector3.Up, 5f );
 			}
 
 			if ( ShouldMine && TimeSinceLastHit > 1f )
