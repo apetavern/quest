@@ -1,6 +1,8 @@
-﻿namespace Quest.Player;
+﻿using Quest.Systems.States.Machines;
 
-public partial class QuestPlayerControllerSimple : BasePlayerController
+namespace Quest.Player;
+
+public partial class QuestPlayerController : BasePlayerController
 {
 	[Net, Predicted] public float WalkSpeed { get; set; } = 150f;
 	[Net] public float RunSpeed { get; set; } = 250f;
@@ -15,7 +17,7 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 	private static Vector3 mins = new Vector3( -16, -16, 0 );
 	private static Vector3 maxs = new Vector3( 16, 16, 72 );
 
-	public QuestPlayerControllerSimple()
+	public QuestPlayerController()
 	{
 
 	}
@@ -49,10 +51,13 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 			if ( trace.Entity is WorldEntity )
 			{
 				var endPosition = trace.EndPosition;
-
 				DebugOverlay.Line( endPosition, endPosition + Vector3.Up * 25, 5f );
-				TargetPosition = endPosition;
-				ShouldMove = true;
+
+				var player = Pawn as QuestPlayer;
+				player.ChangeStateMachine( new WalkingStateMachine( endPosition ) );
+				/*				DebugOverlay.Line( endPosition, endPosition + Vector3.Up * 25, 5f );
+								TargetPosition = endPosition;
+								ShouldMove = true;*/
 			}
 		}
 	}
@@ -98,24 +103,24 @@ public partial class QuestPlayerControllerSimple : BasePlayerController
 
 	}
 
-	public void MoveTo( Entity entity )
+	public void MoveTo( Entity entity, float offset = 64f )
 	{
 		Log.Info( "Moving to entity: " + entity.Name );
 		TargetPosition = entity.Position;
 		ShouldMove = true;
 
 		// Temporarily set the approximate distance so the player doesn't continually run into the target.
-		ApproximatePositionOffset = 64f;
+		ApproximatePositionOffset = offset;
 	}
 
-	public void MoveTo( Vector3 position )
+	public void MoveTo( Vector3 position, float offset = 10f )
 	{
 		Log.Info( "Moving to position: " + position );
 		TargetPosition = position;
 		ShouldMove = true;
 
 		// Temporarily set the approximate distance so the player doesn't continually run into the target.
-		ApproximatePositionOffset = 64f;
+		ApproximatePositionOffset = offset;
 	}
 
 	[ConCmd.Server( name: "quest_test" )]

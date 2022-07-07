@@ -20,7 +20,7 @@ public partial class WalkingState : State
 	public override void Start()
 	{
 		var player = Owner as QuestPlayer;
-		var controller = player.Controller as QuestPlayerControllerSimple;
+		var controller = player.Controller as QuestPlayerController;
 
 		controller.MoveTo( Target );
 	}
@@ -30,7 +30,7 @@ public partial class WalkingState : State
 		DebugOverlay.ScreenText( Target.ToString(), 1 );
 
 		var player = Owner as QuestPlayer;
-		var controller = player.Controller as QuestPlayerControllerSimple;
+		var controller = player.Controller as QuestPlayerController;
 
 		if ( !controller.ShouldMove )
 		{

@@ -10,10 +10,9 @@
     border-left: 3px rgb(50, 50, 40);
     border-top: 3px rgb(50, 50, 40);
     border-top-left-radius: 3px;
-
-    &:hover {
+    /*&:hover {
         pointer-events: all;
-    }
+    }*/
 
     InventoryItem {
         width: 64px;

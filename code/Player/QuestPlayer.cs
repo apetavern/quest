@@ -3,6 +3,7 @@ using Quest.Systems.Inventory;
 using Quest.Systems.Items.Mining;
 using Quest.Systems.Skills;
 using Quest.Systems.States;
+using Quest.Systems.States.Machines;
 
 namespace Quest.Player;
 
@@ -61,7 +62,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		CreateHull();
 
 		Camera = new QuestPlayerCamera();
-		Controller = new QuestPlayerControllerSimple();
+		Controller = new QuestPlayerController();
 		Animator = new QuestPlayerAnimator();
 	}
 

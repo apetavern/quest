@@ -1,13 +1,21 @@
 ﻿InteractionMenu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
 
     .interaction-menu-container {
         flex-direction: column;
         background-color: rgba(4, 42, 71, 1);
+        position: absolute;
         opacity: 0;
 
         &.show {
             opacity: 1;
+        }
+
+        &.pointer-events {
             pointer-events: all;
+            background-color: darkcyan;
         }
     }
 

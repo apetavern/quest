@@ -1,4 +1,4 @@
-﻿namespace Quest.Systems.States;
+﻿namespace Quest.Systems.States.Machines;
 
 public class IdleStateMachine : PlayerStateMachine
 {
@@ -9,7 +9,7 @@ public class IdleStateMachine : PlayerStateMachine
 
 	public override void Start()
 	{
-		States.Add( new IdleState() );
+		States.Add(new IdleState());
 
 		ActiveState = States.First();
 	}

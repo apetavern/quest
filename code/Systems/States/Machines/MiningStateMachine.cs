@@ -1,7 +1,7 @@
 ﻿using Quest.Entities;
 using Quest.Player;
 
-namespace Quest.Systems.States;
+namespace Quest.Systems.States.Machines;
 
 public partial class MiningStateMachine : PlayerStateMachine
 {

@@ -1,4 +1,4 @@
-﻿namespace Quest.Systems.States;
+﻿namespace Quest.Systems.States.Machines;
 
 public abstract partial class PlayerStateMachine : StateMachine
 {

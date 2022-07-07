@@ -1,6 +1,6 @@
 ﻿using Quest.Entities;
 using Quest.Player;
-using Quest.Systems.States;
+using Quest.Systems.States.Machines;
 
 namespace Quest.Systems.Interactions;
 

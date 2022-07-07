@@ -9,7 +9,7 @@ public partial class StateMachineComponent : EntityComponent
 
 	public void Init()
 	{
-		StateMachine = new IdleStateMachine();
+		// StateMachine = new IdleStateMachine();
 		StateMachine.Start();
 	}
 
