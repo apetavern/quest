@@ -50,6 +50,7 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		base.Spawn();
 
 		SetModel( "models/player/citizen_quest.vmdl" );
+		Scale = 1.33f;
 		ClothingContainer.DressEntity( this );
 
 		Components.Create<PlayerInventoryComponent>();

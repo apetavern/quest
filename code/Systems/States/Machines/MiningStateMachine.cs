@@ -35,10 +35,11 @@ public partial class MiningStateMachine : PlayerStateMachine
 
 	public override void Start()
 	{
-		States.Add( new WalkingState( OreDeposit.Position, Owner ) );
+		States.Add( new WalkingState( WalkType.ToEntity, OreDeposit, Owner ) );
 		States.Add( new MiningState( OreDeposit, Owner ) );
 
-		ChangeState( States.First() );
+		if ( States.Count > 0 )
+			ChangeState( States.First() );
 	}
 
 	public override void Stop()

@@ -26,7 +26,7 @@ public class WalkingStateMachine : PlayerStateMachine
 
 	public override void Start()
 	{
-		States.Add( new WalkingState( Target, Owner ) );
+		States.Add( new WalkingState( WalkType.ToPosition, Target, Owner ) );
 		ChangeState( States.First() );
 	}
 

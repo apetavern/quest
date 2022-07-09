@@ -53,11 +53,11 @@ public partial class QuestPlayerController : BasePlayerController
 				var endPosition = trace.EndPosition;
 				DebugOverlay.Line( endPosition, endPosition + Vector3.Up * 25, 5f );
 
+				TargetPosition = Game.Current.MapGrid.GetTilePosition( endPosition );
+				ShouldMove = true;
+
 				var player = Pawn as QuestPlayer;
-				player.ChangeStateMachine( new WalkingStateMachine( endPosition ) );
-				/*				DebugOverlay.Line( endPosition, endPosition + Vector3.Up * 25, 5f );
-								TargetPosition = endPosition;
-								ShouldMove = true;*/
+				player.ChangeStateMachine( new IdleStateMachine() );
 			}
 		}
 	}
