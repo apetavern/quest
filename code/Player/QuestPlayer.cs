@@ -75,6 +75,8 @@ public partial class QuestPlayer : AnimatedEntity, IInteractable
 		Controller?.Simulate( cl, this, Animator );
 		StateMachine?.Simulate();
 
+		// Game.Current.MapGrid.DistanceDebug( Game.Current.MapGrid.GetTilePosition( Position ) );
+
 		if ( StateMachine.ActiveState is MiningState && TimeUntilNextMineAnim <= 0f )
 		{
 			SetAnimParameter( "b_attack", true );

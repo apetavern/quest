@@ -1,5 +1,6 @@
 ﻿using Quest.Systems.Items;
 using Quest.Systems.Inventory;
+using Quest.Systems.Interactions;
 
 namespace Quest.UI.Inventory;
 
@@ -57,17 +58,22 @@ public partial class InventoryItem : Panel
 		{
 			Count.AddClass( "hide" );
 		}
-
-		AddEventListener( "onclick", () =>
-		{
-			Log.Info( "OnClick" );
-		} );
-
-		AddEventListener( "onrightclick", () =>
-		{
-			Log.Info( "Rightclick" );
-		} );
 	}
 
+	protected override void OnClick( MousePanelEvent e )
+	{
+		Log.Info( $"{Item.Name} was clicked." );
 
+		var interaction = Item.GetInteractions().Where( interaction => interaction.CanResolve ).First();
+		interaction.ClientResolve();
+		if ( interaction.ResolveOnServer )
+		{
+			Interaction.TryServerResolve( interaction.Owner.NetworkIdent, interaction.ID );
+		}
+	}
+
+	protected override void OnRightClick( MousePanelEvent e )
+	{
+		Log.Info( $"{Item.Name} was right clicked." );
+	}
 }

@@ -49,4 +49,27 @@ public partial class Grid : Entity
 		var newPos = MapGrid[i.FloorToInt(), j.FloorToInt()];
 		return newPos;
 	}
+
+	// private float MaxHeightShift = 32f;
+
+	public void DistanceDebug( Vector3 position )
+	{
+		for ( int i = 0; i < MapGrid.GetLength( 0 ); i++ )
+		{
+			for ( int j = 0; j < MapGrid.GetLength( 1 ); j++ )
+			{
+				Vector3 target = MapGrid[i, j];
+				if ( position == target )
+				{
+					DebugOverlay.Text( "0", target );
+				}
+				else
+				{
+					var dist = (target - position) / 64f;
+					DebugOverlay.Text( dist.ToString(), target );
+				}
+			}
+		}
+	}
 }
+
