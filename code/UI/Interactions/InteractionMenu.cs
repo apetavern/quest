@@ -53,8 +53,6 @@ public class InteractionMenu : Panel
 
 	public override void Tick()
 	{
-		CheckPanelHover();
-
 		if ( Input.Pressed( InputButton.SecondaryAttack ) )
 		{
 			var traces = Trace.Ray( Input.Cursor.Origin, Input.Cursor.Origin + Input.Cursor.Direction * 100000f )
@@ -84,22 +82,5 @@ public class InteractionMenu : Panel
 				InteractionMenuContainer.Style.Top = yPos * ScaleFromScreen;
 			}
 		}
-	}
-
-	private void CheckPanelHover()
-	{
-		var c = InteractionMenuContainer.Box.Rect;
-
-		var xPos = c.Position.x;
-		var yPos = c.Position.y;
-		var minBoundary = new Vector2( xPos, yPos );
-		var maxBoundary = new Vector2( xPos + c.Size.x, yPos + c.Size.y );
-
-		bool mouseInBoundary = (
-			Mouse.Position.x > minBoundary.x
-			&& Mouse.Position.y > minBoundary.y
-			&& Mouse.Position.x < maxBoundary.x
-			&& Mouse.Position.y < maxBoundary.y);
-		InteractionMenuContainer.SetClass( "pointer-events", mouseInBoundary );
 	}
 }

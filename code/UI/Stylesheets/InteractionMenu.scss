@@ -13,8 +13,7 @@
             opacity: 1;
         }
 
-        &.pointer-events {
-            pointer-events: all;
+        &:hover {
             background-color: darkcyan;
         }
     }

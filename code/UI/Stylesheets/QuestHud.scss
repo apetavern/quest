@@ -3,3 +3,9 @@
 QuestHud {
     pointer-events: visible;
 }
+
+.accepts-input {
+    &:hover, &:active {
+        pointer-events: auto;
+    }
+}
